@@ -1,0 +1,6 @@
+{
+  "GET_URLS": ["/data/:id"],
+  "POST_URLS": ["/data/:id"],
+  "PUT_URLS": ["/data/:id"],
+  "DELETE_URLS": ["/data/:id"]
+}
