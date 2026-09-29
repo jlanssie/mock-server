@@ -1,4 +1,3 @@
-const defaultRoute = require("./default");
 const Router = require("./router.class");
 const matchPath = require("../utils/path.util");
 
@@ -28,7 +27,10 @@ const handleRequest = (req, res) => {
     }
   }
 
-  return defaultRoute(req, res);
+  // Fallback
+
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "Default reponse" }));
 };
 
 module.exports = {
