@@ -3,18 +3,6 @@ class BodyParser {
     req.body = await this.parseJsonStream(req);
   }
 
-  async parseJsonStream(req) {
-    try {
-      const chunks = [];
-      for await (const chunk of req) {
-        chunks.push(chunk);
-      }
-      return this.parseJson(Buffer.concat(chunks).toString().trim());
-    } catch {
-      return {};
-    }
-  }
-
   handleResponse(res) {
     const end = res.end;
     const chunks = [];
@@ -27,6 +15,18 @@ class BodyParser {
 
       return end.call(res, chunk, encoding, callback);
     };
+  }
+
+  async parseJsonStream(req) {
+    try {
+      const chunks = [];
+      for await (const chunk of req) {
+        chunks.push(chunk);
+      }
+      return this.parseJson(Buffer.concat(chunks).toString().trim());
+    } catch {
+      return {};
+    }
   }
 
   parseJson(raw) {
