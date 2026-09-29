@@ -4,7 +4,7 @@ const { preHandleRequest, postHandleRequest } = require("./middleware/_index");
 const { handleRequest } = require("./routes/_index");
 const { getPort } = require("./utils/_index");
 
-const port = 2000 || process.env.PORT || getPort();
+const port = process.env.PORT || getPort();
 
 const server = http.createServer(async (req, res) => {
   try {
