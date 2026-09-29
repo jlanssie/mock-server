@@ -1,12 +1,22 @@
-const express = require("express");
-const logMiddleware = require("./log");
+const BodyParser = require("./bodyParser.class");
+const Logger = require("./logger.class");
 
-const initMiddleware = (app) => {
-  app.use(express.urlencoded({ extended: true }));
-  app.use(express.json());
-  app.use(logMiddleware);
+const bodyParser = new BodyParser();
+const logger = new Logger();
+
+const preHandleRequest = async (req, res) => {
+  await bodyParser.handleRequest(req);
+  bodyParser.handleResponse(res);
+  logger.handleRequest(req);
+};
+
+const postHandleRequest = (req, res) => {
+  res.on("finish", () => {
+    logger.handleResponse(req, res);
+  });
 };
 
 module.exports = {
-  initMiddleware,
+  preHandleRequest: preHandleRequest,
+  postHandleRequest: postHandleRequest,
 };
