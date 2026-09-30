@@ -1,27 +1,47 @@
 const colors = {
-  cyan: (str) => `\x1b[36m${str}\x1b[0m`,
-  green: (str) => `\x1b[32m${str}\x1b[0m`,
-  magenta: (str) => `\x1b[35m${str}\x1b[0m`,
-  dim: (str) => `\x1b[2m${str}\x1b[0m`,
+  green: (s) => `\x1b[32m${s}\x1b[0m`,
+  yellow: (s) => `\x1b[33m${s}\x1b[0m`,
+  red: (s) => `\x1b[31m${s}\x1b[0m`,
+  cyan: (s) => `\x1b[36m${s}\x1b[0m`,
+  magenta: (s) => `\x1b[35m${s}\x1b[0m`,
+  dim: (s) => `\x1b[2m${s}\x1b[0m`,
 };
+
+function formatStatus(status) {
+  const code = String(status);
+  if (status >= 500) return colors.red(code);
+  if (status >= 400) return colors.yellow(code);
+  if (status >= 300) return colors.cyan(code);
+  if (status >= 200) return colors.green(code);
+  return code;
+}
+
+function formatBody(body) {
+  if (!body || typeof body !== "object" || Object.keys(body).length === 0) {
+    return "";
+  }
+  return `${colors.cyan(`${JSON.stringify(body)}`)}`;
+}
 
 export default class Logger {
   handleRequest(req) {
-    const time = colors.green(new Date().toLocaleTimeString());
-    const arrow = "⇢";
-    const method = colors.cyan(req.method);
-    const hasBody = req.body && typeof req.body === "object" && Object.keys(req.body).length > 0;
-    const body = hasBody ? `\n\n${colors.dim(JSON.stringify(req.body, null, 2))}` : "";
+    req._startTime = performance.now();
 
-    console.info(`${time}\n\n${arrow} ${method} ${req.url} ${body}\n`);
+    const time = colors.dim(new Date().toISOString());
+    const method = colors.cyan(req.method.padEnd(6));
+    const body = formatBody(req.body);
+
+    console.info(`${time} ${colors.green("⇢")} ${method} ${req.url} ${body}`);
   }
 
   handleResponse(req, res) {
-    const arrow = "⇠";
-    const status = `${colors.cyan(res.statusCode.toString())}`;
-    const hasBody = res.body && typeof res.body === "object" && Object.keys(res.body).length > 0;
-    const body = hasBody ? `\n\n${colors.dim(JSON.stringify(res.body, null, 2))}` : "";
+    const duration = req._startTime ? `${(performance.now() - req._startTime).toFixed(2)}ms` : "";
 
-    console.info(`${arrow} ${status} ${body}\n`);
+    const time = colors.dim(new Date().toISOString());
+    const status = formatStatus(res.statusCode.toString().padEnd(6));
+    const latency = colors.dim(duration);
+    const body = formatBody(res.body);
+
+    console.info(`${time} ${colors.magenta("⇠")} ${status} ${req.url} ${latency} ${body}`);
   }
 }
