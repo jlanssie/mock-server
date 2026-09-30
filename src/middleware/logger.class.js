@@ -19,7 +19,7 @@ export default class Logger {
   handleResponse(req, res) {
     const arrow = "⇠";
     const status = `${colors.cyan(res.statusCode.toString())}`;
-    const hasBody = res.body && typeof res.body === "object" && Object.keys(req.body).length > 0;
+    const hasBody = res.body && typeof res.body === "object" && Object.keys(res.body).length > 0;
     const body = hasBody ? `\n\n${colors.dim(JSON.stringify(res.body, null, 2))}` : "";
 
     console.info(`${arrow} ${status} ${body}\n`);

@@ -2,10 +2,10 @@
   "name": "Mock Server",
   "version": "1.0.0",
   "description": "Mocks endpoints and replies with mock data.",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
     "prettier": "prettier --write .",
-    "start": "node server.js",
+    "start": "node src/server.js",
     "test": "node --test"
   },
   "keywords": [],

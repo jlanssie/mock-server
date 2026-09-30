@@ -1,7 +1,7 @@
 import Router from "./router.class.js";
 import { matchRoute } from "../utils/_index.js";
-import routesConfig from "../config/routes.json" with { type: "json" };
-import mockData from "../mock/data.json" with { type: "json" };
+import routesConfig from "../../config/routes.json" with { type: "json" };
+import mockData from "../../data/mockData.json" with { type: "json" };
 
 const methodConfigs = [
   { method: "GET", urls: routesConfig.GET_URLS, response: mockData },
