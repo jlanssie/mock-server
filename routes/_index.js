@@ -16,7 +16,7 @@ export const handleRequest = (req, res) => {
   for (const route of router.getRoutes()) {
     const match = matchRoute(route, req);
     if (match) {
-      return route.handler(req, res,);
+      return route.handler(req, res);
     }
   }
 
