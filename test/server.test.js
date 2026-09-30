@@ -2,7 +2,7 @@ const { test, describe, before, after } = require("node:test");
 const assert = require("node:assert");
 const http = require("node:http");
 const { Readable } = require("node:stream");
-const { preHandleRequest } = require("../middleware/_index");
+const { preHook } = require("../middleware/_index");
 const BodyParser = require("../middleware/bodyParser.class");
 const Logger = require("../middleware/logger.class");
 const { handleRequest, matchPath, Router } = require("../routes/_index");
@@ -15,7 +15,7 @@ describe("Mock Server (Vanilla Node.js)", () => {
   before(async () => {
     const handler = async (req, res) => {
       try {
-        await preHandleRequest(req, res);
+        await preHook(req, res);
         handleRequest(req, res);
       } catch (err) {
         if (!res.headersSent) {

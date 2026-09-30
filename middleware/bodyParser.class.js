@@ -1,4 +1,4 @@
-class BodyParser {
+export default class BodyParser {
   async handleRequest(req) {
     req.body = await this.parseJsonStream(req);
   }
@@ -38,5 +38,3 @@ class BodyParser {
     }
   }
 }
-
-module.exports = BodyParser;

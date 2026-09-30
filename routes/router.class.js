@@ -1,4 +1,4 @@
-class Router {
+export default class Router {
   constructor() {
     this.routes = [];
   }
@@ -23,5 +23,3 @@ class Router {
     return this;
   }
 }
-
-module.exports = Router;

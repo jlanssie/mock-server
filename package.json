@@ -10,10 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "type": "commonjs",
-  "dependencies": {
-    "chalk": "^4.1.2"
-  },
+  "type": "module",
   "devDependencies": {
     "prettier": "^3.9.6"
   }

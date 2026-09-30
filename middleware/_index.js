@@ -1,22 +1,17 @@
-const BodyParser = require("./bodyParser.class");
-const Logger = require("./logger.class");
+import BodyParser from "./bodyParser.class.js";
+import Logger from "./logger.class.js";
 
 const bodyParser = new BodyParser();
 const logger = new Logger();
 
-const preHandleRequest = async (req, res) => {
+export const preHook = async (req, res) => {
   await bodyParser.handleRequest(req);
   bodyParser.handleResponse(res);
   logger.handleRequest(req);
 };
 
-const postHandleRequest = (req, res) => {
+export const postHook = (req, res) => {
   res.on("finish", () => {
     logger.handleResponse(req, res);
   });
-};
-
-module.exports = {
-  preHandleRequest: preHandleRequest,
-  postHandleRequest: postHandleRequest,
 };

@@ -1,8 +1,7 @@
-const Router = require("./router.class");
-const matchPath = require("../utils/path.util");
-
-const routesConfig = require("../config/routes.json");
-const mockData = require("../mock/data.json");
+import Router from "./router.class.js";
+import { matchRoute } from "../utils/_index.js";
+import routesConfig from "../config/routes.json" with { type: "json" };
+import mockData from "../mock/data.json" with { type: "json" };
 
 const methodConfigs = [
   { method: "GET", urls: routesConfig.GET_URLS, response: mockData },
@@ -11,31 +10,18 @@ const methodConfigs = [
   { method: "DELETE", urls: routesConfig.DELETE_URLS, response: {} },
 ];
 
-const handleRequest = (req, res) => {
+export const handleRequest = (req, res) => {
   const router = new Router().initRoutes(methodConfigs);
 
-  const [pathname, queryString] = (req.url || "/").split("?");
-  const method = req.method?.toUpperCase();
-
   for (const route of router.getRoutes()) {
-    if (route.method === method) {
-      const { matches, params } = matchPath(route.path, pathname);
-      if (matches) {
-        const query = Object.fromEntries(new URLSearchParams(queryString));
-        return route.handler(req, res, { params, query });
-      }
+    const match = matchRoute(route, req);
+    if (match) {
+      return route.handler(req, res,);
     }
   }
 
   // Fallback
 
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Default reponse" }));
-};
-
-module.exports = {
-  handleRequest,
-  matchPath,
-  Router,
-  methodConfigs,
+  res.end(JSON.stringify({ message: "Default response" }));
 };

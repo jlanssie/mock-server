@@ -1,16 +1,15 @@
-const http = require("node:http");
+import http from "node:http";
+import { preHook, postHook } from "./middleware/_index.js";
+import { handleRequest } from "./routes/_index.js";
+import { getPort } from "./utils/_index.js";
 
-const { preHandleRequest, postHandleRequest } = require("./middleware/_index");
-const { handleRequest } = require("./routes/_index");
-const { getPort } = require("./utils/_index");
-
-const port = process.env.PORT || getPort();
+const port = 2000 || process.env.PORT || getPort();
 
 const server = http.createServer(async (req, res) => {
   try {
-    await preHandleRequest(req, res);
+    await preHook(req, res);
     handleRequest(req, res);
-    postHandleRequest(req, res);
+    postHook(req, res);
   } catch (err) {
     console.error(err);
     if (!res.headersSent) {
@@ -23,5 +22,3 @@ const server = http.createServer(async (req, res) => {
 server.listen(port, () => {
   console.info(`\nMock server listening to port ${port} ⚡\n`);
 });
-
-module.exports = server;
