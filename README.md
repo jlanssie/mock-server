@@ -18,6 +18,12 @@ Use JavaScript Package Manager [npm](https://www.npmjs.com/) to run Mock Server.
 npm run start
 ```
 
+Alternatively, run it with a specified port:
+
+```shell
+npm run start 12345
+```
+
 ## Configuration
 
 Adapt the configuration files to your needs:
