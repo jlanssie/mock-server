@@ -1,12 +1,11 @@
 {
-  "name": "Mock Server",
+  "name": "Node.js Server",
   "version": "1.0.0",
-  "description": "Mocks endpoints and replies with mock data.",
+  "description": "A sample server in vanilla Node.js",
   "main": "src/server.js",
   "scripts": {
     "prettier": "prettier --write .",
-    "start": "node src/server.js",
-    "test": "node --test"
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",

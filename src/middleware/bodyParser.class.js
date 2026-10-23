@@ -21,7 +21,7 @@ export default class BodyParser {
     }
   }
 
-  async #handleJsonResponse(res) {
+  #handleJsonResponse(res) {
     const end = res.end;
     const chunks = [];
 

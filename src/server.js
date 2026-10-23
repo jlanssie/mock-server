@@ -1,9 +1,8 @@
 import http from "node:http";
 import { preHook, postHook } from "./middleware/_index.js";
 import { handleRequest } from "./routes/_index.js";
-import { getPort } from "./utils/_index.js";
 
-const port = 2000 || process.env.PORT || getPort();
+const port = 2345;
 
 const server = http.createServer(async (req, res) => {
   try {
@@ -20,5 +19,5 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(port, () => {
-  console.info(`\nMock server listening to port ${port} ⚡\n`);
+  console.info(`\nServer listening to port ${port} ⚡\n`);
 });
