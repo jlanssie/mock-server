@@ -2,6 +2,8 @@
 
 A Node.js Express application to simulate local endpoints.
 
+![Screenshot of the Mock Server](screenshot.png)
+
 ## Installation
 
 Use JavaScript Package Manager [npm](https://www.npmjs.com/) to install Mock Server.

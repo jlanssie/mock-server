@@ -2,11 +2,11 @@ const chalk = require("chalk");
 const { rawContentTypes, jsonContentType } = require("../utils/_index");
 
 const logMiddleware = (req, res, next) => {
-  const time = chalk.dim(new Date().toLocaleTimeString());
+  const time = new Date().toLocaleTimeString();
   const method = chalk.magenta(req.method.padEnd(7));
   const url = req.originalUrl;
 
-  console.log(`${time} ${method} ${url}\n`);
+  console.log(`\n${time} ${method} ${url}\n`);
 
   let contentType = req.headers["content-type"] || "";
   if (contentType) {
@@ -32,7 +32,7 @@ const logMiddleware = (req, res, next) => {
   if (isJson) {
     const hasBody = req.body && typeof req.body === "object" && Object.keys(req.body).length > 0;
     if (hasBody) {
-      console.log(`\n${chalk.cyan(JSON.stringify(req.body, null, 2))}`);
+      console.log(`\n${chalk.dim(JSON.stringify(req.body, null, 2))}`);
     }
   }
 
