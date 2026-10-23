@@ -8,7 +8,10 @@ const logMiddleware = (req, res, next) => {
 
   console.log(`${time} ${method} ${url}`);
 
-  const contentType = req.headers["content-type"] || "";
+  let contentType = req.headers["content-type"] || "";
+  if (contentType) {
+    contentType = contentType.split(";")[0].trim().toLowerCase();
+  }
 
   console.log(`\n${chalk.dim("Headers")}\n${chalk.dim(JSON.stringify(req.headers, null, 2))}`);
 
@@ -16,7 +19,8 @@ const logMiddleware = (req, res, next) => {
   if (isRaw) {
     const isBuffer = Buffer.isBuffer(req.body);
     if (isBuffer) {
-      console.log(`\n${chalk.dim("Payload (RAW)")}\n${chalk.dim(`${req.body.length} bytes\n${req.body.toString()}`)}`);
+      const body = req.body.toString("base64");
+      console.log(`\n${chalk.dim("Payload (RAW)")}\n${chalk.dim(req.body.length + " bytes\n" + body)}`);
     }
   }
 

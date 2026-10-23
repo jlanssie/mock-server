@@ -5,7 +5,7 @@ const { initMiddleware } = require("./middleware/_index");
 const { initRoutes } = require("./routes/_index");
 const { getPort } = require("./utils/_index");
 
-const port = getPort();
+const port = 64033;
 
 initMiddleware(app);
 initRoutes(app);
