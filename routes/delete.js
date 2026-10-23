@@ -4,7 +4,7 @@ const router = express.Router();
 const routesConf = require("../config/routes.json");
 
 const handleDelete = (req, res) => {
-  res.status(200).json({});
+  res.status(200).end();
 };
 
 routesConf.DELETE_URLS.forEach((endpoint) => {
