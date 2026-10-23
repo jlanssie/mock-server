@@ -4,6 +4,12 @@ const MAX_PORT = 65535;
 const EXCLUDED_PORTS = new Set([3000, 3001, 4200, 5000, 5173, 8000, 8080, 8443, 8888, 3306, 5432, 6379, 27017, 1433, 9200]);
 
 const getPort = () => {
+  const args = process.argv.slice(2);
+
+  if (args[0] && !isNaN(args[0])) {
+    return parseInt(args[0], 10);
+  }
+
   let port;
   do {
     port = Math.floor(Math.random() * (MAX_PORT - MIN_PORT + 1)) + MIN_PORT;
