@@ -13,14 +13,19 @@ const logMiddleware = (req, res, next) => {
     contentType = contentType.split(";")[0].trim().toLowerCase();
   }
 
-  console.log(`\n${chalk.dim("Headers")}\n${chalk.dim(JSON.stringify(req.headers, null, 2))}`);
+  console.log(`\n`);
+  for (const [key, value] of Object.entries(req.headers)) {
+    const isImportant = ["content-type", "content-length", "authorization"].includes(key);
+    const headerKey = isImportant ? chalk.cyan(key) : chalk.dim(key);
+    const headerVal = isImportant ? chalk.white(value) : chalk.dim(value);
+    console.log(`  ${headerKey}: ${headerVal}`);
+  }
 
   const isRaw = rawContentTypes.includes(contentType);
   if (isRaw) {
     const isBuffer = Buffer.isBuffer(req.body);
     if (isBuffer) {
-      const body = req.body.toString("base64");
-      console.log(`\n${chalk.dim("Payload (RAW)")}\n${chalk.dim(req.body.length + " bytes\n" + body)}`);
+      console.log(`\n  ${chalk.dim(req.body.toString("base64"))}`);
     }
   }
 
@@ -28,7 +33,7 @@ const logMiddleware = (req, res, next) => {
   if (isJson) {
     const hasBody = req.body && typeof req.body === "object" && Object.keys(req.body).length > 0;
     if (hasBody) {
-      console.log(`\n${chalk.dim("Payload (JSON)")}\n${chalk.cyan(JSON.stringify(req.body, null, 2))}`);
+      console.log(`\n  ${chalk.cyan(JSON.stringify(req.body, null, 2))}`);
     }
   }
 
